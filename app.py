@@ -248,12 +248,12 @@ HTML_EDITOR_CODE = """
         <div id="help-panel">
             <h3>📘 Hướng dẫn sử dụng</h3>
             <ul>
-                <li><span class="help-icon">➕</span> Kéo nhánh mới từ Node</li>
-                <li><span class="help-icon">⇄</span> Nối 2 Node có sẵn</li>
-                <li><span class="help-icon">✏️</span> Bấm vào số trên Cạnh để sửa</li>
-                <li><span class="help-icon">🟢</span> Đặt làm Nguồn (Source)</li>
-                <li><span class="help-icon">🔴</span> Đặt làm Đích (Sink)</li>
-                <li><span class="help-icon">❌</span> Xóa Node hoặc Cạnh</li>
+                <li><span class="help-icon">➕</span> Kéo nhánh mới từ node</li>
+                <li><span class="help-icon">⇄</span> Nối 2 node có sẵn</li>
+                <li><span class="help-icon">✏️</span> Bấm vào số trên cạnh để sửa</li>
+                <li><span class="help-icon">🟢</span> Đặt làm nguồn (Source)</li>
+                <li><span class="help-icon">🔴</span> Đặt làm đích (Sink)</li>
+                <li><span class="help-icon">❌</span> Xóa node hoặc cạnh</li>
             </ul>
             <button class="btn-got-it" onclick="toggleHelp()">Tuyệt vời, tôi đã hiểu!</button>
         </div>
@@ -261,8 +261,8 @@ HTML_EDITOR_CODE = """
         <!-- Status Panel - MOVED TO RIGHT -->
         <div id="status-panel">
             <div style="font-size: 10px; font-weight: 800; color: #94A3B8; text-transform: uppercase; margin-bottom: 2px;">Thống kê</div>
-            <div class="status-item"><span class="metric-label">Nodes:</span> <span id="count-nodes" style="color:#3B82F6">1</span></div>
-            <div class="status-item"><span class="metric-label">Edges:</span> <span id="count-edges" style="color:#8B5CF6">0 / 0</span></div>
+            <div class="status-item"><span class="metric-label">Số node:</span> <span id="count-nodes" style="color:#3B82F6">1</span></div>
+            <div class="status-item"><span class="metric-label">Số cạnh:</span> <span id="count-edges" style="color:#8B5CF6">0 / 0</span></div>
             
             <div style="font-size: 10px; font-weight: 800; color: #94A3B8; text-transform: uppercase; margin-bottom: 2px; margin-top: 8px;">Cấu hình</div>
             <div class="status-item">
