@@ -10,18 +10,39 @@ st.set_page_config(page_title="Ứng dụng giải bài toán MinCut-MaxFlow", l
 
 st.markdown("""
 <style>
-    /* Nền tổng thể của App */
-    .stApp { background: linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%); font-family: 'Inter', sans-serif; }
+    /* CỐ ĐỊNH LIGHT MODE - Ghi đè biến hệ thống Streamlit */
+    :root {
+        color-scheme: light !important;
+    }
     
+    [data-theme="dark"] {
+        --st-color-background: #F8FAFC !important;
+        --st-color-text: #1E293B !important;
+        --st-color-secondary-background: #F1F5F9 !important;
+    }
+
+    /* Nền tổng thể của App */
+    .stApp { 
+        background: linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%) !important; 
+        font-family: 'Inter', sans-serif; 
+        color: #1E293B !important;
+    }
+    
+    /* Ép màu chữ cho toàn bộ các phần tử văn bản */
+    .stApp h1, .stApp h2, .stApp h3, .stApp p, .stApp span, .stApp label {
+        color: #1E293B !important;
+    }
+
     /* Container chính dạng Card 3D */
     .block-container {
         max-width: 1400px !important;
         margin: 2rem auto !important;
-        background-color: rgba(255, 255, 255, 0.85);
+        background-color: rgba(255, 255, 255, 0.85) !important;
         backdrop-filter: blur(12px);
         padding: 2.5rem !important;
         border-radius: 24px;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05), border: 1px solid rgba(255,255,255,0.6);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(255,255,255,0.6);
     }
     
     /* Text Gradient cho Tiêu đề */
@@ -30,18 +51,22 @@ st.markdown("""
         background: -webkit-linear-gradient(45deg, #1E293B, #3B82F6);
         -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-    .subtitle { text-align: center; color: #64748B; margin-bottom: 1.5rem; font-size: 1.1rem; font-weight: 500;}
+    .subtitle { text-align: center; color: #64748B !important; margin-bottom: 1.5rem; font-size: 1.1rem; font-weight: 500;}
     
     /* Tùy chỉnh Radio buttons */
-    .stRadio > div { flex-direction: row; justify-content: center; gap: 30px; background: #F1F5F9; padding: 10px; border-radius: 50px; display: inline-flex; margin: 0 auto; }
+    .stRadio > div { 
+        flex-direction: row; justify-content: center; gap: 30px; 
+        background: #F1F5F9 !important; padding: 10px; border-radius: 50px; 
+        display: inline-flex; margin: 0 auto; 
+    }
     
     /* Kết quả dạng Card Custom */
-    .result-card { background: white; padding: 20px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-left: 5px solid; height: 100%; }
+    .result-card { background: white !important; padding: 20px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-left: 5px solid; height: 100%; }
     .card-maxflow { border-color: #3B82F6; }
     .card-phi { border-color: #10B981; }
     .card-psi { border-color: #EF4444; }
-    .res-title { font-size: 14px; color: #64748B; text-transform: uppercase; font-weight: 700; margin-bottom: 8px;}
-    .res-value { font-size: 24px; color: #1E293B; font-weight: 800; }
+    .res-title { font-size: 14px; color: #64748B !important; text-transform: uppercase; font-weight: 700; margin-bottom: 8px;}
+    .res-value { font-size: 24px; color: #1E293B !important; font-weight: 800; }
     
     @media (max-width: 768px) {
         .block-container { padding: 1rem !important; margin: 0 !important; border-radius: 0; box-shadow: none; }
@@ -62,7 +87,7 @@ with col_mode2:
         label_visibility="collapsed"
     )
 
-st.markdown("<div class='subtitle'>Công cụ mô phỏng MaxFlow – MinCut trực quan giúp người dùng tạo, chỉnh sửa và phân tích đồ thị mạng luồng một cách dễ dàng. Ứng dụng hỗ trợ đồ thị có hướng/vô hướng, tính toán tự động Max Flow – Min Cut và hiển thị kết quả trực quan theo thời gian thực. </div>", unsafe_allow_html=True)
+st.markdown("<div class='subtitle'>Một bài tập lớn môn Kỹ thuật ra quyết định về phần mềm giải bài toán MaxFlow – MinCut trực quan giúp người dùng tạo, chỉnh sửa và phân tích đồ thị mạng luồng một cách dễ dàng. Ứng dụng hỗ trợ đồ thị có hướng/vô hướng, tính toán tự động Max Flow – Min Cut và hiển thị kết quả trực quan theo thời gian thực. </div>", unsafe_allow_html=True)
 
 # ==========================================
 # 2. FRONTEND GRAPH EDITOR (JS & CSS NÂNG CAO)
@@ -175,8 +200,12 @@ HTML_EDITOR_CODE = """
         .inline-container { position: absolute; display: none; z-index: 100; transform: translate(-50%, -50%); }
         .editor-box { display: flex; align-items: center; gap: 8px; background: white; padding: 6px; border-radius: 50px; box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3); border: 2px solid #3B82F6; animation: popIn 0.2s ease;}
         @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-        .inline-input { text-align: center; background: transparent; border: none; font-weight: 800; font-size: 16px; outline: none; color: #1E293B; width: 45px; margin-left: 5px;}
+        .inline-input { text-align: center; background: transparent; border: none; font-weight: 800; font-size: 16px; outline: none; color: #1E293B; width: 45px;}
         
+        /* Spin buttons (+/-) */
+        .spin-btn { width: 36px; height: 36px; border-radius: 50%; border: none; background: #F1F5F9; color: #1E293B; font-weight: 800; font-size: 20px; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: 0.2s; padding: 0; margin: 0;}
+        .spin-btn:active { background: #3B82F6; color: white; }
+
         .btn-edge-del { background: #FEF2F2; color: #EF4444; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; transition: 0.2s;}
         .btn-edge-del:hover { background: #DC2626; color: white; }
 
@@ -271,7 +300,10 @@ HTML_EDITOR_CODE = """
 
         <div class="inline-container" id="edge-input-container">
             <div class="editor-box">
+                <button class="spin-btn" onclick="stepValue(-1)">−</button>
                 <input type="number" class="inline-input" id="edge-input" min="1">
+                <button class="spin-btn" onclick="stepValue(1)">+</button>
+                <div style="width: 1px; height: 24px; background: #E2E8F0; margin: 0 2px;"></div>
                 <button class="btn-edge-del" onclick="deleteEdge()" title="Xóa cạnh">❌</button>
             </div>
         </div>
@@ -528,6 +560,15 @@ HTML_EDITOR_CODE = """
                 document.getElementById('node-input-container').style.left = pos.x + 'px';
                 document.getElementById('node-input-container').style.top = pos.y + 'px';
             }
+        }
+
+        function stepValue(step) {
+            let inp = document.getElementById('edge-input');
+            let v = parseInt(inp.value);
+            if(isNaN(v)) v = 1;
+            v += step;
+            if(v < 1) v = 1;
+            inp.value = v;
         }
 
         cy.on('tap', 'node', function(e){
