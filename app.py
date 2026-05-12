@@ -136,6 +136,9 @@ HTML_EDITOR_CODE = """
         .btn-solve { background: linear-gradient(135deg, #3B82F6, #2563EB); color: white; box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3); }
         .btn-solve:hover { box-shadow: 0 12px 25px rgba(59, 130, 246, 0.4); }
         
+        .btn-edit { background: linear-gradient(135deg, #10B981, #059669); color: white; box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3); display: none; }
+        .btn-edit:hover { box-shadow: 0 12px 25px rgba(16, 185, 129, 0.4); }
+        
         .btn-clear { background: white; color: #EF4444; border: 2px solid #FECACA; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
         .btn-clear:hover { background: #FEF2F2; border-color: #FCA5A5; }
 
@@ -151,24 +154,24 @@ HTML_EDITOR_CODE = """
         #toolbar { position: absolute; top: 20px; left: 20px; z-index: 10; display: flex; gap: 12px; align-items: center; }
         .toolbar-divider { width: 2px; height: 24px; background: #E2E8F0; margin: 0 5px; border-radius: 2px; }
         
-        /* --- SIDEBAR PANEL (FIXED RIGHT) --- */
+        /* --- SIDEBAR PANEL (FIXED RIGHT - ĐÃ THU NHỎ) --- */
         #status-panel { 
-            position: absolute; top: 20px; right: 20px; z-index: 10; 
+            position: absolute; top: 15px; right: 15px; z-index: 10; 
             background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); 
-            border-radius: 20px; padding: 25px 20px; border: 1px solid #E2E8F0; 
-            display: flex; flex-direction: column; gap: 18px; align-items: stretch;
-            box-shadow: -10px 10px 30px rgba(0,0,0,0.05);
-            width: 220px; max-height: 600px; overflow-y: auto;
+            border-radius: 15px; padding: 12px 15px; border: 1px solid #E2E8F0; 
+            display: flex; flex-direction: column; gap: 10px; align-items: stretch;
+            box-shadow: -5px 5px 20px rgba(0,0,0,0.05);
+            width: 150px; max-height: 600px; overflow-y: auto;
         }
-        .status-item { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #1E293B; font-weight: 700; }
+        .status-item { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #1E293B; font-weight: 700; }
         .metric-label { color: #64748B; font-weight: 500; }
-        .status-badge { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 5px; }
-        .bg-source { background: #10B981; box-shadow: 0 0 10px #10B981; }
-        .bg-sink { background: #EF4444; box-shadow: 0 0 10px #EF4444; }
+        .status-badge { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 4px; }
+        .bg-source { background: #10B981; box-shadow: 0 0 8px #10B981; }
+        .bg-sink { background: #EF4444; box-shadow: 0 0 8px #EF4444; }
 
         /* Vùng kết quả phụ trong side panel */
-        #side-result-box { margin-top: 10px; padding-top: 15px; border-top: 1px solid #eee; display: none; }
-        .side-res-val { font-size: 20px; color: #3B82F6; font-weight: 800; text-align: center; }
+        #side-result-box { margin-top: 5px; padding-top: 10px; border-top: 1px solid #eee; display: none; }
+        .side-res-val { font-size: 16px; color: #3B82F6; font-weight: 800; text-align: center; }
 
         #viewport-controls { position: absolute; bottom: 20px; left: 20px; z-index: 10; display: flex; background: white; border-radius: 50px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 1px solid #E2E8F0; padding: 4px; gap: 2px;}
         .vp-btn { width: 40px; height: 40px; border-radius: 50%; border: none; background: transparent; cursor: pointer; font-size: 18px; color: #475569; font-weight: bold; transition: 0.2s; display: flex; justify-content: center; align-items: center;}
@@ -232,7 +235,8 @@ HTML_EDITOR_CODE = """
         <div id="toast-container"></div>
         
         <div id="toolbar">
-            <button class="btn btn-solve" onclick="sendToPython()">🚀 Giải bài toán</button>
+            <button id="btn-solve" class="btn btn-solve" onclick="sendToPython()">🚀 Giải bài toán</button>
+            <button id="btn-edit" class="btn btn-edit" onclick="enableEditMode()">✏️ Chỉnh sửa</button>
             <button class="btn btn-clear" onclick="toggleHelp()" style="background:white; color:#3B82F6; border: 2px solid #BFDBFE;">💡 Hướng dẫn</button>
             <button class="btn btn-clear" onclick="showConfirm()">🔄 Xóa đồ thị</button>
             <div class="toolbar-divider"></div>
@@ -251,16 +255,16 @@ HTML_EDITOR_CODE = """
                 <li><span class="help-icon">🔴</span> Đặt làm Đích (Sink)</li>
                 <li><span class="help-icon">❌</span> Xóa Node hoặc Cạnh</li>
             </ul>
-            <button class="btn-got-it" onclick="toggleHelp()" >Tuyệt vời, tôi đã hiểu!</button>
+            <button class="btn-got-it" onclick="toggleHelp()">Tuyệt vời, tôi đã hiểu!</button>
         </div>
 
         <!-- Status Panel - MOVED TO RIGHT -->
         <div id="status-panel">
-            <div style="font-size: 11px; font-weight: 800; color: #94A3B8; text-transform: uppercase; margin-bottom: 5px;">Thống kê</div>
+            <div style="font-size: 10px; font-weight: 800; color: #94A3B8; text-transform: uppercase; margin-bottom: 2px;">Thống kê</div>
             <div class="status-item"><span class="metric-label">Nodes:</span> <span id="count-nodes" style="color:#3B82F6">1</span></div>
             <div class="status-item"><span class="metric-label">Edges:</span> <span id="count-edges" style="color:#8B5CF6">0 / 0</span></div>
             
-            <div style="font-size: 11px; font-weight: 800; color: #94A3B8; text-transform: uppercase; margin-bottom: 5px; margin-top: 10px;">Cấu hình</div>
+            <div style="font-size: 10px; font-weight: 800; color: #94A3B8; text-transform: uppercase; margin-bottom: 2px; margin-top: 8px;">Cấu hình</div>
             <div class="status-item">
                 <span class="metric-label"><span class="status-badge bg-source"></span>Source</span>
                 <span id="txt-source" style="color: #10B981">--</span>
@@ -271,7 +275,7 @@ HTML_EDITOR_CODE = """
             </div>
 
             <div id="side-result-box">
-                <div style="font-size: 11px; font-weight: 800; color: #3B82F6; text-transform: uppercase; margin-bottom: 5px;">Kết quả Flow</div>
+                <div style="font-size: 10px; font-weight: 800; color: #3B82F6; text-transform: uppercase; margin-bottom: 2px;">Kết quả Flow</div>
                 <div class="side-res-val" id="res-val-side">0</div>
             </div>
         </div>
@@ -442,6 +446,23 @@ HTML_EDITOR_CODE = """
         const nodeToolbar = document.getElementById('node-toolbar');
         const helpPanel = document.getElementById('help-panel');
 
+        function enableEditMode() {
+            document.getElementById('btn-solve').style.display = 'flex';
+            document.getElementById('btn-edit').style.display = 'none';
+            document.getElementById('side-result-box').style.display = 'none';
+
+            cy.edges().forEach(e => {
+                e.removeClass('flowing saturated residual mincut');
+                e.data('capacityLabel', e.data('capacity').toString());
+            });
+
+            window.parent.postMessage({ 
+                isStreamlitMessage: true, 
+                type: "streamlit:setComponentValue", 
+                value: { action: "edit", ts: Date.now() } 
+            }, "*");
+        }
+
         function getNextNodeLabel() {
             let label = nodeCounter.toString();
             while (!cy.nodes(`[label="${label}"]`).empty()) { nodeCounter++; label = nodeCounter.toString(); }
@@ -537,8 +558,16 @@ HTML_EDITOR_CODE = """
             cy.center(n); cy.zoom(0.85); updateStatusPanel(); 
             updateMetrics(window.currentGraphMode);
             document.getElementById('side-result-box').style.display = 'none';
+            document.getElementById('btn-solve').style.display = 'flex';
+            document.getElementById('btn-edit').style.display = 'none';
             showToast("Bản vẽ đã được làm sạch", "success");
             saveState(); // LƯU LỊCH SỬ
+            
+            window.parent.postMessage({ 
+                isStreamlitMessage: true, 
+                type: "streamlit:setComponentValue", 
+                value: { action: "edit", ts: Date.now() } 
+            }, "*");
         }
 
         function handleFocusView() { cy.fit(cy.elements(), 120); if(cy.zoom() > 1) cy.zoom(1); cy.center(); }
@@ -691,7 +720,7 @@ HTML_EDITOR_CODE = """
             cy.edges().forEach(e => { edges.push({ id: e.id(), source: e.data('source'), target: e.data('target'), capacity: e.data('capacity') }); });
             if(nodes.length < 2) { showToast("Vẽ thêm ít nhất 1 node nữa nhé", "warning"); return; }
             if(!src || !snk) { showToast("Bạn chưa chọn Nguồn (Source) hoặc Đích (Sink)!", "error"); return; }
-            const data = { nodes, edges, source: src, sink: snk, ts: Date.now() };
+            const data = { nodes, edges, source: src, sink: snk, action: "solve", ts: Date.now() };
             window.parent.postMessage({ isStreamlitMessage: true, type: "streamlit:setComponentValue", value: data }, "*");
         }
 
@@ -722,6 +751,9 @@ HTML_EDITOR_CODE = """
                 isInitialized = true;
             }
             if (args.results && !args.results.error) {
+                document.getElementById('btn-solve').style.display = 'none';
+                document.getElementById('btn-edit').style.display = 'flex';
+                
                 // Update side panel result
                 document.getElementById('side-result-box').style.display = 'block';
                 document.getElementById('res-val-side').innerText = args.results.maxflow;
@@ -740,8 +772,13 @@ HTML_EDITOR_CODE = """
                 showToast("Mô phỏng luồng thành công!", "success");
                 showResultModal('success', args.results); // HIỂN THỊ MODAL KẾT QUẢ THÀNH CÔNG
             } else if (args.results?.error) { 
+                document.getElementById('btn-solve').style.display = 'flex';
+                document.getElementById('btn-edit').style.display = 'none';
                 showToast(args.results.error, "error"); 
                 showResultModal('error', args.results); // HIỂN THỊ MODAL LỖI
+            } else {
+                document.getElementById('btn-solve').style.display = 'flex';
+                document.getElementById('btn-edit').style.display = 'none';
             }
         });
         window.parent.postMessage({ isStreamlitMessage: true, type: "streamlit:componentReady", apiVersion: 1 }, "*");
@@ -776,36 +813,42 @@ if graph_data:
     current_ts = graph_data.get("ts")
     if current_ts and current_ts != st.session_state.last_ts:
         st.session_state.last_ts = current_ts
-        st.session_state.current_graph = graph_data
         
-        src_id, snk_id = str(graph_data["source"]), str(graph_data["sink"])
-        id_to_label = {n["id"]: n["label"] for n in graph_data["nodes"]}
-        G = nx.DiGraph()
-        for n in graph_data["nodes"]: G.add_node(n["id"])
-        for e in graph_data["edges"]:
-            u, v, cap = str(e["source"]), str(e["target"]), int(e["capacity"])
-            G.add_edge(u, v, capacity=cap, id=e["id"])
-            if graph_mode == "Vô hướng":
-                G.add_edge(v, u, capacity=cap)
+        if graph_data.get("action") == "edit":
+            st.session_state.computation_results = None
+            st.rerun()
+            
+        elif graph_data.get("action") == "solve":
+            st.session_state.current_graph = graph_data
+            
+            src_id, snk_id = str(graph_data["source"]), str(graph_data["sink"])
+            id_to_label = {n["id"]: n["label"] for n in graph_data["nodes"]}
+            G = nx.DiGraph()
+            for n in graph_data["nodes"]: G.add_node(n["id"])
+            for e in graph_data["edges"]:
+                u, v, cap = str(e["source"]), str(e["target"]), int(e["capacity"])
+                G.add_edge(u, v, capacity=cap, id=e["id"])
+                if "vô hướng" in graph_mode.lower():
+                    G.add_edge(v, u, capacity=cap)
 
-        try:
-            if not nx.has_path(G, src_id, snk_id): raise ValueError(f"Không có đường đi từ node {id_to_label[src_id]} đến {id_to_label[snk_id]}")
-            flow_val, flow_dict = nx.maximum_flow(G, src_id, snk_id)
-            cut_val, partition = nx.minimum_cut(G, src_id, snk_id)
-            reachable, non_reachable = partition
-            flow_res = { e_attr["id"]: { "flow": flow_dict[u][v], "is_mincut": (u in reachable and v in non_reachable) } for u, v, e_attr in G.edges(data=True) if "id" in e_attr }
-            st.session_state.computation_results = { 
-                "maxflow": flow_val, 
-                "mincut": cut_val, 
-                "phi": [id_to_label[n] for n in reachable], 
-                "psi": [id_to_label[n] for n in non_reachable], 
-                "flow_data": flow_res,
-                "source_lbl": id_to_label[src_id],
-                "sink_lbl": id_to_label[snk_id]
-            }
-        except Exception as e:
-            st.session_state.computation_results = {"error": str(e)}
-        st.rerun()
+            try:
+                if not nx.has_path(G, src_id, snk_id): raise ValueError(f"Không có đường đi từ node {id_to_label[src_id]} đến {id_to_label[snk_id]}")
+                flow_val, flow_dict = nx.maximum_flow(G, src_id, snk_id)
+                cut_val, partition = nx.minimum_cut(G, src_id, snk_id)
+                reachable, non_reachable = partition
+                flow_res = { e_attr["id"]: { "flow": flow_dict[u][v], "is_mincut": (u in reachable and v in non_reachable) } for u, v, e_attr in G.edges(data=True) if "id" in e_attr }
+                st.session_state.computation_results = { 
+                    "maxflow": flow_val, 
+                    "mincut": cut_val, 
+                    "phi": [id_to_label[n] for n in reachable], 
+                    "psi": [id_to_label[n] for n in non_reachable], 
+                    "flow_data": flow_res,
+                    "source_lbl": id_to_label[src_id],
+                    "sink_lbl": id_to_label[snk_id]
+                }
+            except Exception as e:
+                st.session_state.computation_results = {"error": str(e)}
+            st.rerun()
 
 # ==========================================
 # 4. HIỂN THỊ KẾT QUẢ DẠNG CARD (STREAMLIT)
@@ -828,7 +871,7 @@ if st.session_state.computation_results and "maxflow" in st.session_state.comput
     with c2:
         st.markdown(f"""
         <div class="result-card" style="border-left-color: #10B981">
-            <div class="card-label">Tập lát cát Φ (Nguồn)</div>
+            <div class="card-label">Tập lát cắt Φ (Nguồn)</div>
             <div class="card-val">{'{ ' + ', '.join(sorted(res['phi'])) + ' }'}</div>
         </div>
         """, unsafe_allow_html=True)
@@ -836,7 +879,7 @@ if st.session_state.computation_results and "maxflow" in st.session_state.comput
     with c3:
         st.markdown(f"""
         <div class="result-card" style="border-left-color: #EF4444">
-            <div class="card-label">Tập lát cát Ψ (Đích)</div>
+            <div class="card-label">Tập lát cắt Ψ (Đích)</div>
             <div class="card-val">{'{ ' + ', '.join(sorted(res['psi'])) + ' }'}</div>
         </div>
         """, unsafe_allow_html=True)
