@@ -53,10 +53,16 @@ st.markdown("""
     }
     .subtitle { text-align: center; color: #64748B !important; margin-bottom: 1.5rem; font-size: 1.1rem; font-weight: 500;}
     
-    /* Tùy chỉnh Radio buttons */
+    /* Tùy chỉnh Radio buttons và Căn giữa tuyệt đối */
+    div[data-testid="stRadio"], .stRadio {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
     .stRadio > div { 
         flex-direction: row; justify-content: center; gap: 30px; 
-        background: #F1F5F9 !important; padding: 10px; border-radius: 50px; 
+        background: #F1F5F9 !important; padding: 10px 30px; border-radius: 50px; 
         display: inline-flex; margin: 0 auto; 
     }
     
@@ -77,17 +83,19 @@ st.markdown("""
 
 st.markdown("<h1>Ứng dụng giải bài toán MinCut-MaxFlow</h1>", unsafe_allow_html=True)
 
-# UI Chọn chế độ Đồ thị
-col_mode1, col_mode2, col_mode3 = st.columns([1, 1, 1])
-with col_mode2:
-    graph_mode = st.radio(
-        "Chế độ mô phỏng:",
-        ["Có hướng", "Vô hướng"],
-        horizontal=True,
-        label_visibility="collapsed"
-    )
+# Hiển thị thông tin tác giả
+st.markdown("<p style='text-align: center; font-size: 16px; font-weight: 600; color: #475569; margin-top: -15px; margin-bottom: 10px;'>👨‍💻 Thực hiện bởi: <span style='color: #3B82F6;'>Nguyễn Ngọc Hải</span> | MSSV: <span style='color: #3B82F6;'>2210893</span></p>", unsafe_allow_html=True)
 
+# Đoạn giới thiệu được đưa lên trên
 st.markdown("<div class='subtitle'>Một bài tập lớn môn Kỹ thuật ra quyết định về phần mềm giải bài toán MaxFlow – MinCut trực quan giúp người dùng tạo, chỉnh sửa và phân tích đồ thị mạng luồng một cách dễ dàng. Ứng dụng hỗ trợ đồ thị có hướng/vô hướng, tính toán tự động Max Flow – Min Cut và hiển thị kết quả trực quan theo thời gian thực. </div>", unsafe_allow_html=True)
+
+# UI Chọn chế độ Đồ thị được đưa xuống dưới
+graph_mode = st.radio(
+    "Chế độ mô phỏng:",
+    ["Mũi tên có hướng", "Mũi tên vô hướng"],
+    horizontal=True,
+    label_visibility="collapsed"
+)
 
 # ==========================================
 # 2. FRONTEND GRAPH EDITOR (JS & CSS NÂNG CAO)
@@ -178,8 +186,8 @@ HTML_EDITOR_CODE = """
         #help-panel ul { list-style: none; padding: 0; margin: 0; }
         #help-panel li { margin-bottom: 15px; font-size: 13px; color: #475569; display: flex; align-items: center; gap: 12px; font-weight: 500;}
         .help-icon { background: #F8FAFC; color: #3B82F6; padding: 6px; border-radius: 8px; font-size: 16px; font-weight: 800; border: 1px solid #E2E8F0; width: 32px; height: 32px; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
-        .btn-got-it { width: 100%; background: #F1F5F9; color: #334155; border: none; padding: 12px; border-radius: 12px; font-weight: 700; cursor: pointer; margin-top: 10px; transition: 0.2s; }
-        .btn-got-it:hover { background: #E2E8F0; color: #0F172A; }
+        .btn-got-it { width: 100%; background: #ECFDF5; color: #065F46; border: 2px solid #10B981; padding: 12px; border-radius: 12px; font-weight: 700; cursor: pointer; margin-top: 10px; transition: 0.2s; }
+        .btn-got-it:hover { background: #10B981; color: white; }
 
         #toast-container { position: absolute; bottom: 20px; right: 250px; z-index: 9999; display: flex; flex-direction: column-reverse; gap: 10px; pointer-events: none; max-width: 320px; }
         .toast { padding: 14px 20px; border-radius: 14px; font-size: 14px; font-weight: 600; box-shadow: 0 15px 35px rgba(0,0,0,0.1); display: flex; align-items: flex-start; gap: 12px; opacity: 0; transform: translateY(20px); transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: auto; background: white; border-left: 6px solid #64748B;}
@@ -243,7 +251,7 @@ HTML_EDITOR_CODE = """
                 <li><span class="help-icon">🔴</span> Đặt làm Đích (Sink)</li>
                 <li><span class="help-icon">❌</span> Xóa Node hoặc Cạnh</li>
             </ul>
-            <button class="btn-got-it" onclick="toggleHelp()">Tuyệt vời, tôi đã hiểu!</button>
+            <button class="btn-got-it" onclick="toggleHelp()" >Tuyệt vời, tôi đã hiểu!</button>
         </div>
 
         <!-- Status Panel - MOVED TO RIGHT -->
