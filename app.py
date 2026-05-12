@@ -6,7 +6,7 @@ import os
 # ==========================================
 # 1. CẤU HÌNH GIAO DIỆN STREAMLIT
 # ==========================================
-st.set_page_config(page_title="Trình Mô Phỏng Maxflow", layout="wide")
+st.set_page_config(page_title="Ứng dụng giải bài toán MinCut-MaxFlow", layout="wide")
 
 st.markdown("""
 <style>
@@ -62,7 +62,7 @@ with col_mode2:
         label_visibility="collapsed"
     )
 
-st.markdown("<div class='subtitle'>Vẽ đồ thị • Thiết lập Source/Sink • Chạy thuật toán mô phỏng luồng cực đại</div>", unsafe_allow_html=True)
+st.markdown("<div class='subtitle'>Công cụ mô phỏng MaxFlow – MinCut trực quan giúp người dùng tạo, chỉnh sửa và phân tích đồ thị mạng luồng một cách dễ dàng. Ứng dụng hỗ trợ đồ thị có hướng/vô hướng, tính toán tự động Max Flow – Min Cut và hiển thị kết quả trực quan theo thời gian thực. </div>", unsafe_allow_html=True)
 
 # ==========================================
 # 2. FRONTEND GRAPH EDITOR (JS & CSS NÂNG CAO)
@@ -438,7 +438,7 @@ HTML_EDITOR_CODE = """
             
             if(type === 'success') {
                 icon.innerHTML = '✅';
-                title.innerHTML = 'PHÂN TÍCH THÀNH CÔNG';
+                title.innerHTML = 'ĐÃ GIẢI XONG';
                 title.style.color = '#10B981';
                 body.innerHTML = `
                     <div style="display:flex; justify-content:space-between; margin-bottom:8px; border-bottom: 1px solid #E2E8F0; padding-bottom: 4px;"><strong>Max Flow:</strong> <span style="font-weight:800; color:#3B82F6;">${data.maxflow}</span></div>
@@ -771,7 +771,7 @@ if st.session_state.computation_results and "maxflow" in st.session_state.comput
     with c1:
         st.markdown(f"""
         <div class="result-card" style="border-left-color: #3B82F6">
-            <div class="card-label">Lưu Lượng Cực Đại</div>
+            <div class="card-label">Lưu lượng cực đại (Max Flow)</div>
             <div class="card-val" style="color: #3B82F6; font-size:24px;">{res["maxflow"]}</div>
         </div>
         """, unsafe_allow_html=True)
@@ -779,7 +779,7 @@ if st.session_state.computation_results and "maxflow" in st.session_state.comput
     with c2:
         st.markdown(f"""
         <div class="result-card" style="border-left-color: #10B981">
-            <div class="card-label">Tập Lát Cắt Φ (Nguồn)</div>
+            <div class="card-label">Tập lát cát Φ (Nguồn)</div>
             <div class="card-val">{'{ ' + ', '.join(sorted(res['phi'])) + ' }'}</div>
         </div>
         """, unsafe_allow_html=True)
@@ -787,7 +787,7 @@ if st.session_state.computation_results and "maxflow" in st.session_state.comput
     with c3:
         st.markdown(f"""
         <div class="result-card" style="border-left-color: #EF4444">
-            <div class="card-label">Tập Lát Cắt Ψ (Đích)</div>
+            <div class="card-label">Tập lát cát Ψ (Đích)</div>
             <div class="card-val">{'{ ' + ', '.join(sorted(res['psi'])) + ' }'}</div>
         </div>
         """, unsafe_allow_html=True)
