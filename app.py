@@ -50,7 +50,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown("<h1>Trình Mô Phỏng Maxflow - Mincut</h1>", unsafe_allow_html=True)
+st.markdown("<h1>Ứng dụng giải bài toán MinCut-MaxFlow</h1>", unsafe_allow_html=True)
 
 # UI Chọn chế độ Đồ thị
 col_mode1, col_mode2, col_mode3 = st.columns([1, 1, 1])
@@ -438,7 +438,7 @@ HTML_EDITOR_CODE = """
             
             if(type === 'success') {
                 icon.innerHTML = '✅';
-                title.innerHTML = 'ĐÃ GIẢI XONG';
+                title.innerHTML = 'ĐÃ GIẢI XONG, KẾT QUẢ:';
                 title.style.color = '#10B981';
                 body.innerHTML = `
                     <div style="display:flex; justify-content:space-between; margin-bottom:8px; border-bottom: 1px solid #E2E8F0; padding-bottom: 4px;"><strong>Max Flow:</strong> <span style="font-weight:800; color:#3B82F6;">${data.maxflow}</span></div>
