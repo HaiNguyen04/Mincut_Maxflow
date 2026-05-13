@@ -35,8 +35,8 @@ def add_qr_code(url):
             border: 1px solid #ddd;
         }}
         .qr-container img {{
-            width: 200px; /* Chỉnh kích thước mã QR */
-            height: 200px;
+            width: 150px; /* Chỉnh kích thước mã QR */
+            height: 150px;
         }}
         .qr-container p {{
             margin: 5px 0 0 0;
