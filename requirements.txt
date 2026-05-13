@@ -2,3 +2,8 @@ streamlit
 networkx
 matplotlib
 customtkinter
+flask
+qrcode
+pillow
+io
+base64
