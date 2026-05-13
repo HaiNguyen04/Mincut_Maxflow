@@ -2,6 +2,64 @@ import streamlit as st
 import networkx as nx
 import streamlit.components.v1 as components
 import os
+import qrcode
+from io import BytesIO
+import base64
+
+
+def add_qr_code(url):
+    # 1. Tạo QR Code từ đường dẫn
+    qr = qrcode.QRCode(version=1, box_size=10, border=2)
+    qr.add_data(url)
+    qr.make(fit=True)
+    img = qr.make_image(fill_color="black", back_color="white")
+
+    # 2. Chuyển đổi ảnh sang định dạng Base64 để nhúng vào HTML
+    buffered = BytesIO()
+    img.save(buffered, format="PNG")
+    img_str = base64.b64encode(buffered.getvalue()).decode()
+
+    # 3. Sử dụng CSS để đặt ảnh ở góc phải trên
+    qr_html = f'''
+    <style>
+        .qr-container {{
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            text-align: center;
+            background-color: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            border: 1px solid #ddd;
+        }}
+        .qr-container img {{
+            width: 100px; /* Chỉnh kích thước mã QR */
+            height: 100px;
+        }}
+        .qr-container p {{
+            margin: 5px 0 0 0;
+            font-size: 10px;
+            color: #555;
+            font-family: sans-serif;
+        }}
+    </style>
+    <div class="qr-container">
+        <a href="{url}" target="_blank">
+            <img src="data:image/png;base64,{img_str}">
+        </a>
+        <p>Quét để truy cập</p>
+    </div>
+    '''
+    st.markdown(qr_html, unsafe_allow_html=True)
+
+# Link ứng dụng MinCut-MaxFlow của bạn
+app_url = "https://mincutmaxflow-d6s2brgipybxkg43djecla.streamlit.app/"
+
+# Gọi hàm để hiển thị
+add_qr_code(app_url)
+
 
 # ==========================================
 # 1. CẤU HÌNH GIAO DIỆN STREAMLIT
