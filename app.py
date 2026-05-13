@@ -3,9 +3,8 @@ import qrcode
 import io
 import base64
 import streamlit as st
-import networkx as nx
-import streamlit.components.v1 as components
-import os
+import qrcode
+from io import BytesIO
 
 app = Flask(__name__)
 
