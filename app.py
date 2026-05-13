@@ -1,7 +1,34 @@
+from flask import Flask, render_template
+import qrcode
+import io
+import base64
 import streamlit as st
 import networkx as nx
 import streamlit.components.v1 as components
 import os
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    # Nội dung bạn muốn gắn vào QR (Link web, thông tin cá nhân, v.v.)
+    data = "https://mincutmaxflow-d6s2brgipybxkg43djecla.streamlit.app/" 
+    
+    # Tạo QR Code
+    qr = qrcode.QRCode(version=1, box_size=10, border=5)
+    qr.add_data(data)
+    qr.make(fit=True)
+    img = qr.make_image(fill_color="black", back_color="white")
+
+    # Chuyển ảnh sang định dạng Base64
+    buf = io.BytesIO()
+    img.save(buf)
+    qr_b64 = base64.b64encode(buf.getvalue()).decode('utf-8')
+
+    return render_template('index.html', qr_code=qr_b64)
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 # ==========================================
 # 1. CẤU HÌNH GIAO DIỆN STREAMLIT
