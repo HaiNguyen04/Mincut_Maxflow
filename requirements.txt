@@ -5,5 +5,3 @@ customtkinter
 flask
 qrcode
 pillow
-io
-base64
