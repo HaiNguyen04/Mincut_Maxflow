@@ -2,33 +2,6 @@ import streamlit as st
 import networkx as nx
 import streamlit.components.v1 as components
 import os
-import base64
-
-def get_base64_of_bin_file(bin_file):
-    with open(bin_file, 'rb') as f:
-        data = f.read()
-    return base64.b64encode(data).decode()
-
-def set_png_as_page_bg(png_file):
-    bin_str = get_base64_of_bin_file(png_file)
-    page_bg_img = f'''
-    <style>
-    .stApp {{
-        background-image: url("data:image/png;base64,{bin_str}");
-        background-size: 100px; /* Điều chỉnh kích thước ảnh */
-        background-repeat: no-repeat;
-        background-attachment: scroll;
-        background-position: top right; /* Đưa ảnh lên góc phải trên */
-    }}
-    </style>
-    '''
-    st.markdown(page_bg_img, unsafe_allow_html=True)
-
-# Gọi hàm với file ảnh của bạn
-# set_png_as_page_bg('QRcode.png')
-
-st.title("Chào mừng đến với trang web của tôi")
-st.write("Ảnh .png đang nằm ở góc phải phía trên.")
 
 # ==========================================
 # 1. CẤU HÌNH GIAO DIỆN STREAMLIT
