@@ -35,8 +35,8 @@ def add_qr_code(url):
             border: 1px solid #ddd;
         }}
         .qr-container img {{
-            width: 150px; /* Chỉnh kích thước mã QR */
-            height: 150px;
+            width: 120px; /* Chỉnh kích thước mã QR */
+            height: 120px;
         }}
         .qr-container p {{
             margin: 5px 0 0 0;
@@ -54,7 +54,7 @@ def add_qr_code(url):
     '''
     st.markdown(qr_html, unsafe_allow_html=True)
 
-# Link ứng dụng MinCut-MaxFlow của bạn
+# Link ứng dụng MinCut-MaxFlow
 app_url = "https://mincutmaxflow-d6s2brgipybxkg43djecla.streamlit.app/"
 
 # Gọi hàm để hiển thị
@@ -776,7 +776,7 @@ HTML_EDITOR_CODE = """
                 if(n.data('role') === 'sink') snk = n.id();
             });
             cy.edges().forEach(e => { edges.push({ id: e.id(), source: e.data('source'), target: e.data('target'), capacity: e.data('capacity') }); });
-            if(nodes.length < 2) { showToast("Vẽ thêm ít nhất 1 node nữa nhé", "warning"); return; }
+            if(nodes.length < 2) { showToast("Vẽ thêm ít nhất 1 node nữa!", "warning"); return; }
             if(!src || !snk) { showToast("Bạn chưa chọn Nguồn (Source) hoặc Đích (Sink)!", "error"); return; }
             const data = { nodes, edges, source: src, sink: snk, action: "solve", ts: Date.now() };
             window.parent.postMessage({ isStreamlitMessage: true, type: "streamlit:setComponentValue", value: data }, "*");
