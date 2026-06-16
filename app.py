@@ -306,7 +306,7 @@ HTML_EDITOR_CODE = """
         <div id="help-panel">
             <h3>📘 Hướng dẫn sử dụng</h3>
             <ul>
-                <li><span class="help-icon">➕</span> Kéo nhánh mới từ node và nhập dung lượng</li>
+                <li><span class="help-icon">➕</span> Thêm node mới và nhập dung lượng</li>
                 <li><span class="help-icon">⇄</span> Nối 2 node có sẵn</li>
                 <li><span class="help-icon">✏️</span> Bấm vào node để sửa tên node</li>
                 <li><span class="help-icon">🟢</span> Đặt một node làm nguồn (Source)</li>
