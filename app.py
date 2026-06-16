@@ -313,7 +313,7 @@ HTML_EDITOR_CODE = """
                 <li><span class="help-icon">🔴</span> Đặt một node làm đích (Sink)</li>
                 <li><span class="help-icon">❌</span> Xóa node hoặc cạnh</li>
             </ul>
-            <button class="btn-got-it" onclick="toggleHelp()">Tuyệt vời, tôi đã hiểu!</button>
+            <button class="btn-got-it" onclick="toggleHelp()">Nhấn để đóng!</button>
         </div>
 
         <!-- Status Panel - MOVED TO RIGHT -->
